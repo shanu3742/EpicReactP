@@ -21,8 +21,8 @@ function Menu({
           getItemProps={getItemProps}
           item={item}
           index={index}
-          selectedItem={selectedItem}
-          highlightedIndex={highlightedIndex}
+          isSelected={ selectedItem?.id === item.id}
+          isHighlighted={highlightedIndex === index}
         >
           {item.name}
         </ListItem>
@@ -30,18 +30,18 @@ function Menu({
     </ul>
   )
 }
+Menu = React.memo( Menu)
 // 🐨 Memoize the Menu here using React.memo
 
 function ListItem({
   getItemProps,
   item,
   index,
-  selectedItem,
-  highlightedIndex,
+  isSelected,
+  isHighlighted,
   ...props
 }) {
-  const isSelected = selectedItem?.id === item.id
-  const isHighlighted = highlightedIndex === index
+  
   return (
     <li
       {...getItemProps({
@@ -56,6 +56,20 @@ function ListItem({
     />
   )
 }
+ListItem = React.memo(ListItem)
+//prevent re-rendring  for ListItem
+// ListItem = React.memo(ListItem,(previousProps,nextProps) => {
+//   if(previousProps.getItemProps !==nextProps.getItemProps)return false
+//   if(previousProps.item !==nextProps.item)return false
+//   if(previousProps.item !==nextProps.item)return false
+//   if(previousProps.selectedItem !==nextProps.selectedItem)return false
+//   if(previousProps.highlightedIndex !== nextProps.highlightedIndex){
+//     const wasHighligt = previousProps.highlightedIndex===previousProps.index
+//     const isnowHighlight = nextProps.highlightedIndex=== nextProps.index
+//     return  wasHighligt ===isnowHighlight
+//   }
+// })
+
 // 🐨 Memoize the ListItem here using React.memo
 
 function App() {
